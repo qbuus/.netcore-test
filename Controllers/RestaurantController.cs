@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using API.services;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace API.entityFramework
 {
@@ -36,6 +36,17 @@ namespace API.entityFramework
             }
             
             return NotFound();          
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult Put([FromBody] updateRestaurantDto dto,[FromRoute] int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
+            var isDone = _services.Patch(id, dto);
+
+            if (!isDone) return NotFound();
+            return Ok();
         }
 
         [HttpGet("{id}")]
@@ -82,5 +93,14 @@ namespace API.entityFramework
         [MaxLength(50)]
         public string Street{ get; set; }
         public string postalCode { get; set; }  
+    }
+
+    public class updateRestaurantDto
+    {
+        [Required]
+        [MaxLength(20)]
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public bool isDelivered { get; set; }
     }
 }

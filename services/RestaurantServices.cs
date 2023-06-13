@@ -57,6 +57,18 @@ namespace API.services
             _dbContext.SaveChanges();
             return true;
         }
+
+        public bool Patch(int id, updateRestaurantDto dto)
+        {
+            var idRestaurant = _dbContext.Type.FirstOrDefault(x => x.Id == id);
+            if (idRestaurant is null) return false;
+
+            idRestaurant.Name = dto.Name;
+            idRestaurant.Description = dto.Description;
+            idRestaurant.IsDelivered = dto.isDelivered;
+
+            _dbContext.SaveChanges(); return true;
+        }
     }
 }
 

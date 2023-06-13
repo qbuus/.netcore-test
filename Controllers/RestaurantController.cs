@@ -15,14 +15,27 @@ namespace API.entityFramework
         {
             _services = services;
         }
-        
-        
+
+
         [HttpGet]
         public ActionResult<IEnumerable<RestaurantDTO>> GetAll()
         {
             var restaurantsDTOS = _services.getAll();
 
             return Ok(restaurantsDTOS);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete ([FromRoute] int id)
+        {
+            var isDeleted = _services.Delete(id);
+
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+            
+            return NotFound();          
         }
 
         [HttpGet("{id}")]

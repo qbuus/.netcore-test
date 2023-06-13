@@ -46,6 +46,17 @@ namespace API.services
 
             return createdRestaurant.Id;
         }
+
+        public bool Delete(int id)
+        {
+            var idRestaurant = _dbContext.Type.FirstOrDefault(x => x.Id == id);
+
+            if (idRestaurant is null) return false;
+
+            _dbContext.Type.Remove(idRestaurant);
+            _dbContext.SaveChanges();
+            return true;
+        }
     }
 }
 

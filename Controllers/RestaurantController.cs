@@ -40,5 +40,30 @@ namespace API.entityFramework
 
             return Ok(idRestaurantDTOS);
         }
+
+        [HttpPost]
+        public ActionResult NewRestaurant([FromBody] NewRestaurantDTO DTO)
+        {
+            var createdRestaurant = _mapper.Map<TestApiClassEntityFramework>(DTO);
+
+            _dbContext.Type.Add(createdRestaurant);
+            
+            _dbContext.SaveChanges();
+
+            return Created($"/api/restaurants/{createdRestaurant.Id}", null);
+        }
+    }
+
+    public class NewRestaurantDTO
+    {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Type { get; set; }
+        public bool IsDelivered { get; set; }
+        public string Contact { get; set; }
+        public int ContactNumber { get; set; }
+        public string City { get; set; }
+        public string Street{ get; set; }
+        public string postalCode { get; set; }  
     }
 }

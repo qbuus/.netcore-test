@@ -1,5 +1,6 @@
 using API;
 using API.entityFramework;
+using API.services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<RestaurantDbContext>();
 builder.Services.AddScoped<RestaurantSeedercs>();
 builder.Services.AddAutoMapper(this.GetType().Assembly);
+builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
 
 var app = builder.Build();
 

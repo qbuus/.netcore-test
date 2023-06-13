@@ -1,4 +1,5 @@
 ﻿
+using System.ComponentModel.DataAnnotations;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
@@ -44,6 +45,11 @@ namespace API.entityFramework
         [HttpPost]
         public ActionResult NewRestaurant([FromBody] NewRestaurantDTO DTO)
         {
+            if(!ModelState.IsValid)                              
+            {
+                return BadRequest(ModelState);
+            }
+
             var createdRestaurant = _mapper.Map<TestApiClassEntityFramework>(DTO);
 
             _dbContext.Type.Add(createdRestaurant);
@@ -56,13 +62,19 @@ namespace API.entityFramework
 
     public class NewRestaurantDTO
     {
+        [Required]
+        [MaxLength(20)]
         public string Name { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
         public bool IsDelivered { get; set; }
         public string Contact { get; set; }
         public int ContactNumber { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string City { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string Street{ get; set; }
         public string postalCode { get; set; }  
     }

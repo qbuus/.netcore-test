@@ -1,5 +1,7 @@
 ﻿
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.entityFramework
 {
@@ -7,19 +9,25 @@ namespace API.entityFramework
     public class RestaurantController : ControllerBase
     {
         private readonly RestaurantDbContext _dbContext;
-        public RestaurantController(RestaurantDbContext dbContext)
+        private readonly IMapper _mapper;
+        public RestaurantController(RestaurantDbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
-        public ActionResult<IEnumerable<TestApiClassEntityFramework>> GetAll()
+        
+        [HttpGet]
+        public ActionResult<IEnumerable<RestaurantDTO>> GetAll()
         {
-            var restaurants = _dbContext.Type.ToList();
+            var restaurants = _dbContext.Type.Include(r => r.Address).Include(r => r.Dish).ToList();
 
-            return Ok(restaurants);
+            var restaurantsDTOS = _mapper.Map<List<RestaurantDTO>>(restaurants);
+
+            return Ok(restaurantsDTOS);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<IEnumerable<TestApiClassEntityFramework>> GetById([FromRoute] int id)
+        public ActionResult<RestaurantDTO> GetById([FromRoute] int id)
         {
             var idRestaurant = _dbContext.Type.FirstOrDefault(x => x.Id == id);
 
@@ -28,7 +36,9 @@ namespace API.entityFramework
                 return NotFound();
             }
 
-            return Ok(idRestaurant);
+            var idRestaurantDTOS = _mapper.Map<RestaurantDTO>(idRestaurant);
+
+            return Ok(idRestaurantDTOS);
         }
     }
 }

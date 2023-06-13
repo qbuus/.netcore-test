@@ -1,6 +1,5 @@
-﻿using API.entityFramework;
-
-namespace API
+﻿
+namespace API.entityFramework
 {
     public class RestaurantSeedercs
     {

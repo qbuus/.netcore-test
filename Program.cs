@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddDbContext<RestaurantDbContext>();
 builder.Services.AddScoped<RestaurantSeedercs>();
+builder.Services.AddAutoMapper(this.GetType().Assembly);
 
 var app = builder.Build();
 

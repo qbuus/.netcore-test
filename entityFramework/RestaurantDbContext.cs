@@ -11,10 +11,10 @@ namespace API.entityFramework
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TestApiClassEntityFramework>()
+            modelBuilder.Entity<RestaurantDTO>()
                 .Property(n => n.Name).IsRequired().HasMaxLength(20);
 
-            modelBuilder.Entity<Dish>()
+            modelBuilder.Entity<DishDTO>()
                 .Property(n => n.Name).IsRequired().HasMaxLength(20);
 
             modelBuilder.Entity<Address>()

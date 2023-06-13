@@ -4,7 +4,7 @@ namespace API.entityFramework
 {
     public class RestaurantDbContext: DbContext
     {
-        private string _connectionUrl = "Server=(localdb)\\mssqllocaldb;Database=RestaurantDb;Trusted_Connection=True;";
+        private readonly string _connectionUrl = "Server=(localdb)\\mssqllocaldb;Database=RestaurantDb;Trusted_Connection=True;";
         public DbSet<TestApiClassEntityFramework> Type { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }

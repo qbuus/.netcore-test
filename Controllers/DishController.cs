@@ -35,5 +35,11 @@ namespace API.Controllers
             var all = _dishService.GetAll(id);
             return Ok(all);
         }
+
+        [HttpDelete]
+        public ActionResult Delete([FromRoute] int id)        
+        {
+            _dishService.RemoveAll(id);
+        }
     }
 }

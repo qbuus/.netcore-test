@@ -73,5 +73,18 @@ namespace API.services
 
             var dishDtos = _mapper.Map<List<DishDTO>>(idRestaurant.Dishes);
         }
+
+        public void RemoveAll(int restaurantId)
+        {
+            var idRestaurant = _dbContext.Type.Include(x => x.Dishes).FirstOrDefault(x => x.Id == restaurantId);
+
+            if (idRestaurant is null)
+            {
+                return new NotFoundException("Hi");
+            }
+
+            _dbContext.RemoveRange(idRestaurant.Dishes);
+            _dbContext.SaveChanges();
+        }
     }
 }

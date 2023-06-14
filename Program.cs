@@ -14,6 +14,7 @@ builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
 builder.Services.AddScoped<Middleware>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<MiddlewareClass>();
+builder.Services.AddScoped<IDishService, DishService>();   
 
 // NLogger
 builder.Host.UseNLog();

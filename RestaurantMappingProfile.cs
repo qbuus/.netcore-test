@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using API.Models;
+using AutoMapper;
 
 namespace API.entityFramework
 {
@@ -16,7 +17,9 @@ namespace API.entityFramework
 
             CreateMap<NewRestaurantDTO, TestApiClassEntityFramework>()
                 .ForMember(x => x.Address, z => z.MapFrom(dto => new Address()
-                {City = dto.City, PostalCode = dto.postalCode, Street = dto.Street }));                
+                {City = dto.City, PostalCode = dto.postalCode, Street = dto.Street }));
+
+            CreateMap<CreateDishDTO, Dish>();
         }
     }
 }

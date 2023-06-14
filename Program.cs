@@ -12,6 +12,7 @@ builder.Services.AddScoped<RestaurantSeedercs>();
 builder.Services.AddAutoMapper(this.GetType().Assembly);
 builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
 builder.Services.AddScoped<Middleware>();
+builder.Services.AddSwaggerGen();
 
 // NLogger
 builder.Host.UseNLog();
@@ -28,6 +29,12 @@ if (!app.Environment.IsDevelopment())
 app.UseMiddleware<Middleware>();
 
 app.UseHttpsRedirection();
+
+app.UseSwagger();
+app.UseSwaggerUI(x =>
+{
+    x.SwaggerEndpoint("/swagger/v1/swagger.json", "API");
+});
 
 app.UseAuthorization();
 

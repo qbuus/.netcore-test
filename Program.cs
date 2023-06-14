@@ -11,6 +11,7 @@ builder.Services.AddDbContext<RestaurantDbContext>();
 builder.Services.AddScoped<RestaurantSeedercs>();
 builder.Services.AddAutoMapper(this.GetType().Assembly);
 builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
+builder.Services.AddScoped<Middleware>();
 
 // NLogger
 builder.Host.UseNLog();
@@ -23,6 +24,8 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+app.UseMiddleware<Middleware>();
 
 app.UseHttpsRedirection();
 

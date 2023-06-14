@@ -13,6 +13,7 @@ builder.Services.AddAutoMapper(this.GetType().Assembly);
 builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
 builder.Services.AddScoped<Middleware>();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<MiddlewareClass>();
 
 // NLogger
 builder.Host.UseNLog();
@@ -27,6 +28,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<Middleware>();
+app.UseMiddleware<MiddlewareClass>();
 
 app.UseHttpsRedirection();
 

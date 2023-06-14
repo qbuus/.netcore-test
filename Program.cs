@@ -1,6 +1,7 @@
 using API;
 using API.entityFramework;
 using API.services;
+using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,9 @@ builder.Services.AddDbContext<RestaurantDbContext>();
 builder.Services.AddScoped<RestaurantSeedercs>();
 builder.Services.AddAutoMapper(this.GetType().Assembly);
 builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
+
+// NLogger
+builder.Host.UseNLog();
 
 var app = builder.Build();
 

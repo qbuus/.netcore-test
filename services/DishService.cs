@@ -12,7 +12,8 @@ namespace API.services
     {
         int Create(int id, CreateDishDTO dto);
         DishDTO Get(int restaurantId, int dishId);
-        List<DishDTO> GetAll(int restaurantId)
+        List<DishDTO> GetAll(int restaurantId);
+        void RemoveAll(int restaurantId);
     }
     public class DishService:IDishService
     {   

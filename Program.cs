@@ -1,11 +1,34 @@
+using System.Text;
 using API;
 using API.entityFramework;
 using API.services;
+using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var authSettings = new AuthSettings();
+
+
 // Add services to the container
+builder.Services.Configure<AuthSettings>(builder.Configuration.GetSection("Authentication"));
+
+builder.Services.AddAuthentication(option => {
+    option.DefaultAuthenticateScheme = "Bearer";
+    option.DefaultScheme = "Bearer";
+    option.DefaultChallengeScheme = "Bearer";
+}).AddJwtBearer(config =>
+{
+    config.RequireHttpsMetadata = false;
+    config.SaveToken = true;
+    config.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidIssuer = authSettings.JwtIssuer,
+        ValidAudience = authSettings.JwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.JwtKey))
+    };
+});
+
 builder.Services.AddControllers();
 builder.Services.AddDbContext<RestaurantDbContext>();
 builder.Services.AddScoped<RestaurantSeedercs>();

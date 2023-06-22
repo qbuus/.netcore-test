@@ -54,6 +54,8 @@ if (!app.Environment.IsDevelopment())
 app.UseMiddleware<Middleware>();
 app.UseMiddleware<MiddlewareClass>();
 
+app.UseAuthentication();
+
 app.UseHttpsRedirection();
 
 app.UseSwagger();

@@ -37,7 +37,8 @@ builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
 builder.Services.AddScoped<Middleware>();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<MiddlewareClass>();
-builder.Services.AddScoped<IDishService, DishService>();   
+builder.Services.AddScoped<IDishService, DishService>();
+builder.Services.AddSingleton(authSettings);
 
 // NLogger
 builder.Host.UseNLog();

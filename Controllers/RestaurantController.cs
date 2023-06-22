@@ -5,6 +5,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Server.IIS.Core;
+using API.Models;
 
 namespace API.entityFramework
 {
@@ -74,6 +75,12 @@ namespace API.entityFramework
             var id = _services.Create(DTO);
 
             return Created($"/api/restaurants/{id}", null);
+        }
+
+        [HttpPost("login")]
+        public ActionResult Login([FromBody] LoginDto dto)
+        {
+            string token = _accountServices.GenerateJwt(dto);
         }
     }
 

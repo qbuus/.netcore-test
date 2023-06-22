@@ -14,7 +14,13 @@ namespace API
             try
             {
                 await next.Invoke(context);
-            } catch (Exception ex)
+            } 
+            catch (BadHttpRequestException badreq )
+            {
+                context.Response.StatusCode = 400;
+                await context.Response.WriteAsync("bad");
+            }
+            catch (Exception ex)
             {
                 _logger.LogError(ex, ex.Message);
 

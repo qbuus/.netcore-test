@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Server.IIS.Core;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace API.entityFramework
 {
     [Route("/restaurant")]
+    [ApiController]
+    [Authorize]
     public class RestaurantController : ControllerBase
     {
         private readonly IRestaurantServices _services;
@@ -20,6 +23,7 @@ namespace API.entityFramework
 
 
         [HttpGet]
+        [Authorize(Policy = "AtLeast20")]
         public ActionResult<IEnumerable<RestaurantDTO>> GetAll()
         {
             var restaurantsDTOS = _services.getAll();
@@ -28,6 +32,7 @@ namespace API.entityFramework
         }
 
         [HttpDelete("{id}")]
+        [AllowAnonymous]
         public ActionResult Delete ([FromRoute] int id)
         {
             var isDeleted = _services.Delete(id);
@@ -65,6 +70,7 @@ namespace API.entityFramework
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult NewRestaurant([FromBody] NewRestaurantDTO DTO)
         {
             if(!ModelState.IsValid)                              

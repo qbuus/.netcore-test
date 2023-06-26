@@ -2,6 +2,7 @@ using System.Text;
 using API;
 using API.entityFramework;
 using API.services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 
@@ -27,6 +28,14 @@ builder.Services.AddAuthentication(option => {
         ValidAudience = authSettings.JwtIssuer,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authSettings.JwtKey))
     };
+});
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("HasNationality", builder => builder.RequireClaim("Nationality"));
+    options.AddPolicy("AtLeast20", builder => builder.AddRequirements(new MinimumAgeRequirement(20)));
+    options.AddPolicy("HasAtLeast2Restaurants", builder => builder.AddRequirements(new MinimRestaurantCount(2)));
 });
 
 builder.Services.AddControllers();

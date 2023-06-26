@@ -48,6 +48,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<MiddlewareClass>();
 builder.Services.AddScoped<IDishService, DishService>();
 builder.Services.AddSingleton(authSettings);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendClient", builder => builder.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://locahlost:8080"));
+});  
+
 
 // NLogger
 builder.Host.UseNLog();
@@ -60,6 +65,8 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
+
+app.UseCors("FrontendClient");
 
 app.UseMiddleware<Middleware>();
 app.UseMiddleware<MiddlewareClass>();

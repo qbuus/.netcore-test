@@ -73,6 +73,10 @@ app.UseMiddleware<MiddlewareClass>();
 
 app.UseAuthentication();
 
+app.UseResponseCaching();
+
+app.UseStaticFiles();
+
 app.UseHttpsRedirection();
 
 app.UseSwagger();

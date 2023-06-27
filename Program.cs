@@ -3,6 +3,7 @@ using API;
 using API.entityFramework;
 using API.services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 
@@ -39,7 +40,7 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<RestaurantDbContext>();
+builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 builder.Services.AddScoped<RestaurantSeedercs>();
 builder.Services.AddAutoMapper(this.GetType().Assembly);
 builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();

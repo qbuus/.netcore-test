@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text;
 using API;
 using API.entityFramework;
@@ -42,7 +43,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddControllers();
 builder.Services.AddDbContext<RestaurantDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionStrings")));
 builder.Services.AddScoped<RestaurantSeedercs>();
-builder.Services.AddAutoMapper(this.GetType().Assembly);
+builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 builder.Services.AddScoped<IRestaurantServices, RestaurantServices>();
 builder.Services.AddScoped<Middleware>();
 builder.Services.AddSwaggerGen();

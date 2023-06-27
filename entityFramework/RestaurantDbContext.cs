@@ -4,6 +4,9 @@ namespace API.entityFramework
 {
     public class RestaurantDbContext: DbContext
     {
+        public RestaurantDbContext(DbContextOptions<RestaurantDbContext> options) : base(options)
+        { }
+
         public DbSet<TestApiClassEntityFramework> Type { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<Dish> Dishes { get; set; }
